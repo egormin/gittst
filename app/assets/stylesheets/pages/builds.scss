@@ -1,0 +1,412 @@
+@keyframes fade-out-status {
+  0%, 50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes blinking-dots {
+  0% {
+    background-color: rgba($white-light, 1);
+    box-shadow: 12px 0 0 0 rgba($white-light,0.2),
+                24px 0 0 0 rgba($white-light,0.2);
+  }
+
+  25% {
+    background-color: rgba($white-light, 0.4);
+    box-shadow: 12px 0 0 0 rgba($white-light,2),
+                24px 0 0 0 rgba($white-light,0.2);
+  }
+
+  75% {
+    background-color: rgba($white-light, 0.4);
+    box-shadow: 12px 0 0 0 rgba($white-light,0.2),
+                24px 0 0 0 rgba($white-light,1);
+  }
+
+  100% {
+    background-color: rgba($white-light, 1);
+    box-shadow: 12px 0 0 0 rgba($white-light,0.2),
+                24px 0 0 0 rgba($white-light,0.2);
+  }
+}
+
+@keyframes blinking-scroll-button {
+  0% { opacity: 0.2; }
+  25% { opacity: 0.5; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+.build-page {
+  .sticky {
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+
+  .build-trace-container {
+    position: absolute;
+    top: 225px;
+    left: 15px;
+    bottom: 10px;
+    background: $black;
+    color: $gray-darkest;
+    font-family: $monospace_font;
+    font-size: 12px;
+
+    &.sidebar-expanded {
+      right: 305px;
+    }
+
+    &.sidebar-collapsed {
+      right: 16px;
+    }
+
+    code {
+      background: $black;
+      color: $gray-darkest;
+    }
+
+    .top-bar {
+      top: 0;
+      height: 35px;
+      display: flex;
+      justify-content: flex-end;
+      background: $gray-light;
+      border: 1px solid $border-color;
+      color: $gl-text-color;
+
+      .truncated-info {
+        margin: 0 auto;
+        align-self: center;
+
+        .truncated-info-size {
+          margin: 0 5px;
+        }
+
+        .raw-link {
+          color: $gl-text-color;
+          margin-left: 5px;
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .controllers {
+      display: flex;
+      align-self: center;
+      font-size: 15px;
+      margin-bottom: 4px;
+
+      svg {
+        height: 15px;
+        display: block;
+        fill: $gl-text-color;
+      }
+
+      .controllers-buttons,
+      .btn-scroll {
+        color: $gl-text-color;
+        height: 15px;
+        vertical-align: middle;
+        padding: 0;
+        width: 12px;
+      }
+
+      .controllers-buttons {
+        margin: 1px 10px;
+      }
+
+      .btn-scroll.animate {
+        .first-triangle {
+          animation: blinking-scroll-button 1s ease infinite;
+          animation-delay: .3s;
+        }
+
+        .second-triangle {
+          animation: blinking-scroll-button 1s ease infinite;
+          animation-delay: .2s;
+        }
+
+        .third-triangle {
+          animation: blinking-scroll-button 1s ease infinite;
+        }
+
+        &:disabled {
+          opacity: 1;
+        }
+      }
+
+      .btn-scroll:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .bash {
+    top: 35px;
+    left: 10px;
+    bottom: 0;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 10px 20px 20px 5px;
+    white-space: pre;
+  }
+
+  .environment-information {
+    background-color: $gray-light;
+    border: 1px solid $border-color;
+    padding: 12px $gl-padding;
+    border-radius: $border-radius-default;
+
+    svg {
+      position: relative;
+      top: 1px;
+      margin-right: 5px;
+    }
+  }
+
+  .build-loader-animation {
+    position: relative;
+    width: 6px;
+    height: 6px;
+    margin: auto auto 12px 2px;
+    border-radius: 50%;
+    animation: blinking-dots 1s linear infinite;
+  }
+}
+
+.status-message {
+  display: inline-block;
+  color: $white-light;
+
+  .status-icon {
+    display: inline-block;
+    width: 16px;
+    height: 33px;
+  }
+
+  .status-text {
+    float: left;
+    opacity: 0;
+    margin-right: 10px;
+    font-weight: normal;
+    line-height: 1.8;
+    transition: opacity 1s ease-out;
+
+    &.animate {
+      animation: fade-out-status 2s ease;
+    }
+  }
+
+  &:hover .status-text {
+    opacity: 1;
+  }
+}
+
+.build-header {
+  position: relative;
+  padding: 0;
+  display: flex;
+  min-height: 58px;
+  align-items: center;
+
+  @media (max-width: $screen-sm-max) {
+    padding-right: 40px;
+    margin-top: 6px;
+
+    .btn-inverted {
+      display: none;
+    }
+  }
+
+  .header-content {
+    flex: 1;
+    line-height: 1.8;
+
+    a {
+      color: $gl-text-color;
+
+      &:hover {
+        color: $gl-link-color;
+        text-decoration: none;
+      }
+    }
+  }
+
+  code {
+    color: $code-color;
+  }
+
+  .avatar {
+    float: none;
+    margin-right: 2px;
+    margin-left: 2px;
+  }
+}
+
+.right-sidebar.build-sidebar {
+  padding: $gl-padding 0;
+
+  &.right-sidebar-collapsed {
+    display: none;
+  }
+
+  .blocks-container {
+    padding: 0 $gl-padding;
+  }
+
+  .block {
+    width: 100%;
+
+    &.coverage {
+      padding: 0 16px 11px;
+    }
+
+    .btn-group-justified {
+      margin-top: 5px;
+    }
+  }
+
+  .js-build-variable {
+    color: $code-color;
+  }
+
+  .js-build-value {
+    padding: 2px 4px;
+    color: $black;
+    background-color: $white-light;
+  }
+
+  .build-sidebar-header {
+    padding: 0 $gl-padding $gl-padding;
+
+    .gutter-toggle {
+      margin-top: 0;
+    }
+  }
+
+  .retry-link {
+    color: $gl-link-color;
+    display: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: $screen-sm-max) {
+      display: block;
+    }
+  }
+
+  .stage-item {
+    cursor: pointer;
+
+    &:hover {
+      color: $gl-text-color;
+    }
+  }
+
+  .build-dropdown {
+    padding: $gl-padding 0;
+
+    .dropdown-menu-toggle {
+      margin-top: 8px;
+    }
+
+    .dropdown-menu {
+      right: $gl-padding;
+      left: $gl-padding;
+      width: auto;
+    }
+  }
+
+  .builds-container {
+    background-color: $white-light;
+    border-top: 1px solid $border-color;
+    border-bottom: 1px solid $border-color;
+    max-height: 300px;
+    overflow: auto;
+
+    svg {
+      position: relative;
+      top: 2px;
+      margin-right: 3px;
+      height: 13px;
+    }
+
+    a {
+      display: block;
+      padding: $gl-padding 10px $gl-padding 40px;
+      width: 270px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &:hover {
+        color: $gl-text-color;
+      }
+    }
+
+    .build-job {
+      position: relative;
+
+      .fa-arrow-right {
+        position: absolute;
+        left: 15px;
+        top: 20px;
+        display: none;
+      }
+
+      &.active {
+        font-weight: bold;
+
+        .fa-arrow-right {
+          display: block;
+        }
+      }
+
+      &.retried {
+        background-color: $gray-lightest;
+      }
+
+      &:hover {
+        background-color: $row-hover;
+      }
+
+      .fa-refresh {
+        font-size: 13px;
+        margin-left: 3px;
+      }
+    }
+  }
+}
+
+.build-sidebar {
+  .container-fluid.container-limited {
+    max-width: 100%;
+  }
+
+  .content-wrapper {
+    padding-bottom: 6px;
+  }
+}
+
+.build-detail-row {
+  margin-bottom: 5px;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.build-light-text {
+  color: $gl-text-color-secondary;
+}
+
+.build-gutter-toggle {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  margin-top: -17px;
+}
